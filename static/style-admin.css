@@ -1,0 +1,757 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --color-primary: #6C9BCF;
+  --color-danger: #FF0060;
+  --color-success: #1B9C85;
+  --color-warning: #F7D060;
+  --color-white: #fff;
+  --color-info-dark: #7d8da1;
+  --color-dark: #363949;
+  --color-light: rgba(132, 139, 200, 0.18);
+  --color-dark-variant: #677483;
+  --color-background: #f6f6f9;
+
+  --card-border-radius: 2rem;
+  --border-radius-1: 0.4rem;
+  --border-radius-2: 1.2rem;
+
+  --card-padding: 1.8rem;
+  --padding-1: 1.2rem;
+
+  --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
+.dark-mode-variables {
+  --color-background: #181a1e;
+  --color-white: #202528;
+  --color-dark: #edeffd;
+  --color-dark-variant: #a3bdcc;
+  --color-light: rgba(0, 0, 0, 0.4);
+  --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  appearance: 0;
+  border: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  display: grid;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.88rem;
+  user-select: none;
+  overflow-x: hidden;
+  color: var(--color-dark);
+  background-color: var(--color-background);
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  /* Retain if horizontal centering is needed */
+  gap: 1.8rem;
+  grid-template-columns: 15rem auto;
+}
+
+a {
+  color: var(--color-dark);
+}
+
+img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+h1 {
+  font-weight: 800;
+  font-size: 1.8rem;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+h3 {
+  font-weight: 500;
+  font-size: 0.87rem;
+}
+
+small {
+  font-size: 0.76rem;
+}
+
+p {
+  color: var(--color-dark-variant);
+}
+
+b {
+  color: var(--color-dark);
+}
+
+.text-muted {
+  color: var(--color-info-dark);
+}
+
+.primary {
+  color: var(--color-primary);
+}
+
+.danger {
+  color: var(--color-danger);
+}
+
+.success {
+  color: var(--color-success);
+}
+
+.warning {
+  color: var(--color-warning);
+}
+
+.container {
+  justify-items: center;
+  /* Center items horizontally */
+  align-items: flex-end;
+  /* Align items to the bottom */
+}
+
+aside {
+  padding-left: 4.5vh;
+  width: min-content;
+  height: 100vh;
+  margin-top: 5px;
+}
+
+aside .toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.4rem;
+}
+
+aside .toggle .logo {
+  display: flex;
+  gap: 0.5rem;
+}
+
+aside .toggle .logo img {
+  width: 2rem;
+  height: 2rem;
+}
+
+aside .toggle .close {
+  padding-right: 1rem;
+  display: none;
+}
+
+aside .sidebar {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-white);
+  box-shadow: var(--box-shadow);
+  border-radius: 15px;
+  height: 88vh;
+  position: relative;
+  top: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+aside .sidebar:hover {
+  box-shadow: none;
+}
+
+aside .sidebar a {
+  display: flex;
+  align-items: center;
+  color: rgba(255, 54, 54, 0.866);
+  height: 3.7rem;
+  gap: 1rem;
+  position: relative;
+  margin-left: 2rem;
+  transition: all 0.3s ease;
+}
+
+aside .sidebar a span {
+  font-size: 1.6rem;
+  transition: all 0.3s ease;
+}
+
+aside .sidebar a:last-child {
+  position: absolute;
+  bottom: 2rem;
+  width: 100%;
+}
+
+aside .sidebar a.active {
+  width: 100%;
+  color: rgba(255, 54, 54, 0.866);
+  background-color: var(--color-light);
+  margin-left: 0;
+  border-radius: 14px;
+}
+
+aside .sidebar a.active::before {
+  content: '';
+  width: 6px;
+  height: 18px;
+  background-color: rgba(255, 54, 54, 0.866);
+}
+
+aside .sidebar a.active span {
+  color: rgba(255, 54, 54, 0.866);
+  margin-left: calc(1rem - 3px);
+}
+
+aside .sidebar a:hover {
+  color: rgba(255, 54, 54, 0.866);
+}
+
+aside .sidebar a:hover span {
+  margin-left: 0.6rem;
+}
+
+aside .sidebar .message-count {
+  background-color: rgba(255, 54, 54, 0.866);
+  padding: 2px 6px;
+  color: var(--color-white);
+  font-size: 11px;
+  border-radius: var(--border-radius-1);
+}
+
+main {
+  margin-top: 1.4rem;
+}
+
+.right-section {
+  margin-top: 1.4rem;
+  width: max-content;
+}
+
+.right-section .nav {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  /* Atur lebar elemen di sini */
+}
+
+.right-section .nav button {
+  display: none;
+}
+
+.right-section .dark-mode {
+  background-color: var(--color-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 1.6rem;
+  width: 4.2rem;
+  cursor: pointer;
+  border-radius: var(--border-radius-1);
+}
+
+.right-section .dark-mode span {
+  font-size: 1.2rem;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-section .dark-mode span.active {
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: var(--border-radius-1);
+}
+
+.right-section .nav .profile {
+  display: flex;
+  gap: 0.5rem;
+  text-align: right;
+}
+
+.right-section .nav .profile .profile-photo {
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.right-section .user-profile {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 1rem;
+  background-color: var(--color-white);
+  padding: var(--card-padding);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.right-section .user-profile:hover {
+  box-shadow: none;
+}
+
+.right-section .user-profile img {
+  width: 11rem;
+  height: auto;
+  margin-bottom: 0.8rem;
+  border-radius: 50%;
+}
+
+.right-section .user-profile h2 {
+  margin-bottom: 0.2rem;
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    width: 95%;
+    grid-template-columns: 7rem auto 23rem;
+  }
+
+  aside .logo h2 {
+    display: none;
+  }
+
+  aside .sidebar h3 {
+    display: none;
+  }
+
+  aside .sidebar a {
+    width: 5.6rem;
+  }
+
+  aside .sidebar a:last-child {
+    position: relative;
+    margin-top: 1.8rem;
+  }
+
+  main .analyse {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  main .new-users .user-list .user {
+    flex-basis: 40%;
+  }
+
+  main .recent-orders {
+    width: 94%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 2rem 0 0 0.8rem;
+  }
+
+  main .recent-orders table {
+    width: 83vw;
+  }
+
+  main table thead tr th:last-child,
+  main table thead tr th:first-child {
+    display: none;
+  }
+
+  main table tbody tr td:last-child,
+  main table tbody tr td:first-child {
+    display: none;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+    grid-template-columns: 1fr;
+    padding: 0 var(--padding-1);
+  }
+
+  aside {
+    position: fixed;
+    background-color: var(--color-white);
+    width: 15rem;
+    z-index: 3;
+    box-shadow: 1rem 3rem 4rem var(--color-light);
+    height: 100vh;
+    left: -100%;
+    display: none;
+    animation: showMenu 0.4s ease forwards;
+  }
+
+  @keyframes showMenu {
+    to {
+      left: 0;
+    }
+  }
+
+  aside .logo {
+    margin-left: 1rem;
+  }
+
+  aside .logo h2 {
+    display: inline;
+  }
+
+  aside .sidebar h3 {
+    display: inline;
+  }
+
+  aside .sidebar a {
+    width: 100%;
+    height: 3.4rem;
+  }
+
+  aside .sidebar a:last-child {
+    position: absolute;
+    bottom: 5rem;
+  }
+
+  aside .toggle .close {
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  main {
+    margin-top: 8rem;
+    padding: 0 1rem;
+  }
+
+  main .new-users .user-list .user {
+    flex-basis: 35%;
+  }
+
+  main .recent-orders {
+    position: relative;
+    margin: 3rem 0 0 0;
+    width: 100%;
+  }
+
+  main .recent-orders table {
+    width: 100%;
+    margin: 0;
+  }
+
+  .right-section {
+    width: 94%;
+    margin: 0 auto 4rem;
+  }
+
+  .right-section .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    align-items: center;
+    background-color: var(--color-white);
+    padding: 0 var(--padding-1);
+    height: 4.6rem;
+    width: 100%;
+    z-index: 2;
+    box-shadow: 0 1rem 1rem var(--color-light);
+    margin: 0;
+  }
+
+  .right-section .nav .dark-mode {
+    width: 4.4rem;
+    position: absolute;
+    left: 66%;
+  }
+
+  .right-section .profile .info {
+    display: none;
+  }
+
+  .right-section .nav button {
+    display: inline-block;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--color-dark);
+    position: absolute;
+    left: 1rem;
+  }
+
+  .right-section .nav button span {
+    font-size: 2rem;
+  }
+
+}
+
+/* !Show data CSS */
+/* !Show Table Data */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #607274;
+  border-radius: 4px;
+}
+
+td {
+  /* border: none; */
+  border: 1px solid #717272a2;
+  text-align: justify;
+  vertical-align: top;
+  padding: 0px 15px 25px 5px;
+  font-weight: 400;
+}
+
+.detail-cell {
+  text-align: center;
+  cursor: pointer;
+  color: rgb(255, 51, 51);
+  padding: 0px 20px 0px 20px;
+}
+
+td.detail-cell:hover {
+  color: #ff3333;
+  /* Warna teks saat hover */
+  text-decoration: underline;
+  /* Garis bawah pada teks saat hover */
+}
+
+th {
+  border: 1px solid #717272a2;
+  text-align: center;
+  padding: 6px;
+  color: #f5f3f3;
+  background-color: rgba(255, 54, 54, 0.866);
+  font-weight: 500;
+}
+
+.tampil-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5vh auto;
+  width: 92%;
+  border: 1px solid black;
+  padding-inline: 2.5vh;
+}
+
+/* * Pagination * */
+.pagination {
+  display: flex;
+  justify-content: center;
+  /* Mengatur tombol di tengah */
+  list-style: none;
+  /* Menghilangkan tanda bullet */
+  padding: 0;
+  margin-top: 15px;
+}
+
+.page-item {
+  display: inline-block;
+}
+
+.page-link {
+  text-decoration: none;
+  color: black;
+  padding: 5px 10px;
+  /* Mengatur padding untuk membuat tombol terlihat lebih besar */
+  border: 1px solid #ccc;
+  /* Menambahkan border */
+}
+
+.page-link:hover {
+  background-color: rgba(255, 54, 54, 0.866);
+  color: black;
+  border-color: rgba(255, 54, 54, 0.866);
+}
+
+.page-item.active .page-link {
+  background-color: rgba(255, 54, 54, 0.866);
+  color: white;
+  border-color: rgba(255, 54, 54, 0.866);
+}
+
+/* Filter Jenis Layanan */
+.filter-container {
+  margin-bottom: 15px;
+}
+
+.filter-container select {
+  padding: 8px 11.5px;
+  border-radius: 5px;
+  border: 1.3px solid #000;
+  outline: none;
+  cursor: pointer;
+}
+
+.filter-container select:focus {
+  border: 1px solid #007bff;
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  float: right;
+  /* Tempatkan tombol close di kanan */
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #ff3232;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* * Modal Pop Up Detail * */
+/* Animasi pop-up modal */
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-detail {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  /* Posisi vertikal di tengah layar */
+  left: 0;
+  /* Posisi horizontal di tengah layar */
+  width: 100%;
+  /* Atur lebar modal sesuai kebutuhan Anda */
+  height: 100%;
+  /* Atur tinggi modal sesuai kebutuhan Anda */
+  overflow: hidden;
+  /* Sembunyikan overflow agar tidak ada scroll */
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Konten modal */
+.modal-detail-content {
+  animation: slideInFromBottom 0.3s ease-in-out forwards;
+  /* Gunakan animasi slideInFromBottom dengan durasi 0.3 detik */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  margin-top: 80px;
+  border-radius: 7px;
+}
+
+.text {
+  font-weight: bold;
+  font-size: x-large;
+  margin-left: 12px;
+  /* margin-bottom: 3px; */
+}
+
+/* !CRUD FORM */
+.box-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 500px;
+  background-color: #f9f9f9;
+}
+
+.box-card h2 {
+  margin-bottom: 10px;
+}
+
+#serviceForm input[type="text"] {
+  width: calc(100% - 80px);
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#serviceForm button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+}
+
+#serviceForm button:hover {
+  background-color: #45a049;
+}
+
+#serviceList {
+  list-style-type: none;
+  padding: 0;
+}
+
+#serviceList li {
+  margin-bottom: 10px;
+}
+
+.serviceName {
+  font-weight: bold;
+}
+
+.editForm input[type="text"] {
+  width: calc(100% - 80px);
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.editForm button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #2196f3;
+  color: white;
+  cursor: pointer;
+}
+
+.editForm button:hover {
+  background-color: #1e87dc;
+}
+
+.deleteBtn {
+  margin-left: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f44336;
+  color: white;
+  cursor: pointer;
+}
+
+.deleteBtn:hover {
+  background-color: #d32f2f;
+}
+
+.editBtn {
+  padding: 5px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #2196f3;
+  color: white;
+  cursor: pointer;
+}
+
+.editBtn button:hover {
+  background-color: #1e87dc;
+}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta property="og:title"
+    content="Website Survey Kepuasan Masyarakat Dinas Kependudukan dan Pencatatan Sipil Kota Semarang">
+  <meta property=" og:description"
+    content="Website Survey Kepuasan Masyarakat Dinas Kependudukan dan Pencatatan Sipil Kota Semarang made by ahnaf b arief" />
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+  <!-- Jquery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>Survey Kepuasan Masyarakat Dinas Kependudukan dan Pencatatan Sipil Kota Semarang</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Jua&amp;display=swap" rel="stylesheet" />
+
+  <script>
+    $(document).ready(function () {
+      viewing();
+    });
+
+    function viewing() {
+      $.ajax({
+        type: "GET",
+        url: "/datadiri?sample_give=halo!",
+        data: {},
+        success: function (response) {
+          console.log(response)
+        },
+      });
+    }
+
+    function hitung_skor(pertanyaan) {
+      let skor = 0;
+      for (let nilai of pertanyaan) {
+        if (nilai == 'Sangat Sesuai' || nilai == 'Sangat Mudah' || nilai == 'Sangat Cepat' || nilai == 'Gratis' || nilai == 'Sangat Sesuai' || nilai == 'Sangat Kompeten' || nilai == 'Sangat sopan dan sangat ramah' || nilai == 'Sangat baik' || nilai == 'Dikelola dengan baik' || nilai == 'Sangat Puas') {
+          skor += 10;
+        } else if (nilai == 'Sesuai' || nilai == 'Mudah' || nilai == 'Cepat' || nilai == 'Murah' || nilai == 'Sesuai' || nilai == 'Kompeten' || nilai == 'Sopan dan ramah' || nilai == 'Baik' || nilai == 'Berfungsi kurang maksimal' || nilai == 'Puas') {
+          skor += 7.5;
+        } else if (nilai == 'Kurang Sesuai' || nilai == 'Kurang Mudah' || nilai == 'Kurang Cepat' || nilai == 'Cukup Mahal' || nilai == 'Kurang Sesuai' || nilai == 'Kurang Kompeten' || nilai == 'Kurang sopan dan kurang ramah' || nilai == 'Cukup' || nilai == 'Ada tetapi tidak berfungsi' || nilai == 'Kurang Puas') {
+          skor += 5;
+        } else if (nilai == 'Tidak Sesuai' || nilai == 'Tidak Mudah' || nilai == 'Tidak Cepat' || nilai == 'Sangat Mahal' || nilai == 'Tidak Sesuai' || nilai == 'Tidak Kompeten' || nilai == 'Tidak sopan dan tidak ramah' || nilai == 'Buruk' || nilai == 'Tidak ada' || nilai == 'Tidak Puas') {
+          skor += 2.5;
+        }
+      }
+      return skor;
+    }
+
+    function posting() {
+      let jenisKelamin = $('input[name="kelamin_give"]:checked').val();
+      let umur = $('input[name="usia_give"]:checked').val();
+      let pendidikan = $('input[name="pendidikan_give"]:checked').val();
+      let pekerjaan = $('input[name="pekerjaan_give"]:checked').val();
+      let pekerjaanLainnya = $('#pekerjaan-lainnya-input').val();
+
+      // Menentukan nilai pekerjaan_give tergantung pada kondisi pekerjaan
+      let pekerjaanValue = pekerjaan === "Lainnya" ? pekerjaanLainnya : pekerjaan;
+
+      // Form Pertanyaan
+      let nomor1 = $('input[name="p1_give"]:checked').val();
+      let nomor2 = $('input[name="p2_give"]:checked').val();
+      let nomor3 = $('input[name="p3_give"]:checked').val();
+      let nomor4 = $('input[name="p4_give"]:checked').val();
+      let nomor5 = $('input[name="p5_give"]:checked').val();
+      let nomor6 = $('input[name="p6_give"]:checked').val();
+      let nomor7 = $('input[name="p7_give"]:checked').val();
+      let nomor8 = $('input[name="p8_give"]:checked').val();
+      let nomor9 = $('input[name="p9_give"]:checked').val();
+      let nomor10 = $('input[name="p10_give"]:checked').val();
+
+      // Form Kritik & Saran
+      let boxKritik = $('#kritik').val();
+      let boxSaran = $('#saran').val();
+
+      // Jenis Layanan
+      let layanan = $('input[name="layanan_give"]:checked').val();
+
+      // Menghitung Skor
+      let jawaban = [nomor1, nomor2, nomor3, nomor4, nomor5, nomor6, nomor7, nomor8, nomor9, nomor10];
+      let skor = hitung_skor(jawaban);
+
+      $.ajax({
+        type: "POST",
+        url: "/datadiri",
+        data: {
+          // Jenis Layanan
+          layanan_give: layanan,
+
+          // Profile
+          kelamin_give: jenisKelamin,
+          usia_give: umur,
+          pendidikan_give: pendidikan,
+          pekerjaan_give: pekerjaanValue,
+
+          // Pertanyaan
+          p1_give: nomor1,
+          p2_give: nomor2,
+          p3_give: nomor3,
+          p4_give: nomor4,
+          p5_give: nomor5,
+          p6_give: nomor6,
+          p7_give: nomor7,
+          p8_give: nomor8,
+          p9_give: nomor9,
+          p10_give: nomor10,
+
+          // Kritik & Saran 
+          kritik: boxKritik,
+          saran: boxSaran,
+
+          // Skor
+          skor: skor
+        },
+        success: function (response) {
+          console.log(response);
+
+          // Sembunyikan elemen-elemen formulir
+          $('#skor-container').show();
+          $('.container').hide();
+
+          // Menampilkan skor
+          $('#skor-container').text('Skor Penilaian Anda : ' + skor + '/100');
+
+          // Menampilkan tombol "Submit"
+          var button = $('<button>').addClass('btn btn-success mb-2').text('Submit');
+          $('#skor-container').after(button);
+
+          // Event handler untuk tombol "Submit"
+          button.on('click', function () {
+            // Tampilkan modal konfirmasi
+            $('#myModal').css('display', 'block');
+          });
+          // Event handler untuk tombol "Yes"
+          $('#yesBtn').on('click', function () {
+            // Refresh halaman
+            window.location.href = '/';
+          })
+          // Event handler untuk tombol "No"
+          $('#noBtn').on('click', function () {
+            // Tutup modal
+            $('#myModal').hide();
+          });
+        },
+        error: function (xhr, status, error) {
+          console.error(xhr);
+          console.error(status);
+          console.error(error);
+          // Tindakan jika terjadi kesalahan saat pengiriman AJAX
+        },
+      });
+    }
+  </script>
+  <script>
+    $(document).ready(function () {
+      // Menambahkan event listener untuk perubahan pada radio button pekerjaan
+      $('input[name="pekerjaan_give"]').change(function () {
+        if ($(this).val() === 'Lainnya') {
+          $('#pekerjaan-lainnya-input').prop('disabled', false);
+        } else {
+          $('#pekerjaan-lainnya-input').prop('disabled', true);
+        }
+      });
+    });
+  </script>
+  <!-- Closed Scroll -->
+  <script>
+    $(document).ready(function () {
+      var lastScrollTop = 0;
+      $(window).scroll(function () {
+        var st = $(this).scrollTop();
+        if (st > lastScrollTop) {
+          $('.top-image').addClass('closed');
+        } else {
+          $('.top-image').removeClass('closed');
+        }
+        lastScrollTop = st;
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="top-image">
+    <img src="/static/images/logo-dispendukcapil.png" alt="">
+    <img src="/static/images/Logo_Resmi_476_Kota_Semarang-removebg-preview.png" alt="">
+    <img src="/static/images/simpul-ekonomi.png" alt="">
+  </div>
+  <!-- <nav class="navbar">
+    <ul class="nav-ul">
+      <li><a href="/">HOME</a></li>
+      <li><a href="/survey">ISI SURVEY</a></li>
+    </ul>
+  </nav> -->
+</body>
+</html>
