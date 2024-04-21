@@ -28,10 +28,6 @@ def hitung_skor(pertanyaan):
             skor += 2.5
     return skor
 
-# @app.route('/')
-# def home():
-#     datadiris = db.dataScoreV2.find()  # Mengambil semua data dari koleksi datadiri
-#     return render_template('index.html', datadiris=datadiris)
 
 @app.route('/')
 def home():
@@ -40,10 +36,6 @@ def home():
 
     # Kirim data ke template HTML
     return render_template('index.html', services=services)
-
-@app.route('/home2')
-def home2():
-    return render_template('index2.html')
 
 @app.route('/datadiri', methods=['GET'])
 def show_datadiri():
@@ -129,10 +121,6 @@ def save_datadiri():
     db.TData30.insert_one(doc)
     return jsonify({'msg': 'POST request complete!'})
 
-@app.route('/survey')
-def survey():
-    return render_template('survey.html')
-
 @app.route('/admin-page', methods=['GET', 'POST'])
 def admin():
     if request.method == 'POST':
@@ -148,6 +136,28 @@ def admin():
         return render_template('admin-page.html', datadiris=datadiris, services=services)
 
 # !!!!!!!
+@app.route('/statistik_dashboard')
+def statistik():
+    return render_template('statistik_dashboard.html')
+
+@app.route('/jenis_kelamin_data')
+def jenis_kelamin_data():
+    # Ambil data jenis kelamin dari koleksi TData30
+    jenis_kelamin = db.TData30.distinct('jenis_kelamin')
+
+    # Hitung jumlah masing-masing jenis kelamin
+    data = {}
+    for jk in jenis_kelamin:
+        count = db.TData30.count_documents({'jenis_kelamin': jk})
+        data[jk] = count
+
+    return jsonify(data)
+
+@app.route('/form_dashboard')
+def form():
+    services = db.services.find()  # Memuat semua data layanan untuk ditampilkan di halaman admin
+    return render_template('form_dashboard.html', services=services)
+
 @app.route('/add_service', methods=['POST'])
 def add_service():
     service_name = request.form['service_name']
@@ -218,13 +228,6 @@ def export_excel():
 
     # Kirim file Excel ke pengguna
     return send_file(filename, as_attachment=True)
-
-# Endpoint untuk menambahkan jenis layanan baru
-# @app.route('/jenis-layanan', methods=['POST'])
-# def add_jenis_layanan():
-#     pilihan_layanan_receive = request.form.get('pilihan_layanan')
-#     db.jenis_layanan.insert_one({'pilihan_layanan': pilihan_layanan_receive})
-#     return redirect(url_for('admin'))
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

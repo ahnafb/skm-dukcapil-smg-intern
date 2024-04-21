@@ -146,7 +146,7 @@ aside .toggle .logo {
 
 aside .toggle .logo img {
   width: 2rem;
-  height: 2rem;
+  height: max-content;
 }
 
 aside .toggle .close {
@@ -173,7 +173,7 @@ aside .sidebar:hover {
 aside .sidebar a {
   display: flex;
   align-items: center;
-  color: rgba(255, 54, 54, 0.866);
+  color: var(--color-primary);
   height: 3.7rem;
   gap: 1rem;
   position: relative;
@@ -194,7 +194,7 @@ aside .sidebar a:last-child {
 
 aside .sidebar a.active {
   width: 100%;
-  color: rgba(255, 54, 54, 0.866);
+  color: var(--color-primary);
   background-color: var(--color-light);
   margin-left: 0;
   border-radius: 14px;
@@ -204,16 +204,16 @@ aside .sidebar a.active::before {
   content: '';
   width: 6px;
   height: 18px;
-  background-color: rgba(255, 54, 54, 0.866);
+  background-color: var(--color-primary);
 }
 
 aside .sidebar a.active span {
-  color: rgba(255, 54, 54, 0.866);
+  color: var(--color-primary);
   margin-left: calc(1rem - 3px);
 }
 
 aside .sidebar a:hover {
-  color: rgba(255, 54, 54, 0.866);
+  color: var(--color-primary);
 }
 
 aside .sidebar a:hover span {
@@ -221,7 +221,7 @@ aside .sidebar a:hover span {
 }
 
 aside .sidebar .message-count {
-  background-color: rgba(255, 54, 54, 0.866);
+  background-color: var(--color-primary);
   padding: 2px 6px;
   color: var(--color-white);
   font-size: 11px;
@@ -509,12 +509,12 @@ td {
 .detail-cell {
   text-align: center;
   cursor: pointer;
-  color: rgb(255, 51, 51);
+  color: var(--color-primary);
   padding: 0px 20px 0px 20px;
 }
 
 td.detail-cell:hover {
-  color: #ff3333;
+  color: var(--color-dark-variant);
   /* Warna teks saat hover */
   text-decoration: underline;
   /* Garis bawah pada teks saat hover */
@@ -525,7 +525,7 @@ th {
   text-align: center;
   padding: 6px;
   color: #f5f3f3;
-  background-color: rgba(255, 54, 54, 0.866);
+  background-color: var(--color-primary);
   font-weight: 500;
 }
 
@@ -564,15 +564,15 @@ th {
 }
 
 .page-link:hover {
-  background-color: rgba(255, 54, 54, 0.866);
+  background-color: var(--color-primary);
   color: black;
-  border-color: rgba(255, 54, 54, 0.866);
+  border-color: var(--color-primary);
 }
 
 .page-item.active .page-link {
-  background-color: rgba(255, 54, 54, 0.866);
+  background-color: var(--color-primary);
   color: white;
-  border-color: rgba(255, 54, 54, 0.866);
+  border-color: var(--color-primary);
 }
 
 /* Filter Jenis Layanan */
@@ -723,6 +723,7 @@ th {
   background-color: #2196f3;
   color: white;
   cursor: pointer;
+  margin-top: 5px;
 }
 
 .editForm button:hover {
@@ -753,5 +754,5 @@ th {
 }
 
 .editBtn button:hover {
-  background-color: #1e87dc;
+  background-color: #0767b6;
 }

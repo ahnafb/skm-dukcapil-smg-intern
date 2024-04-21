@@ -172,13 +172,13 @@
     </div>
 
     <div class="sidebar">
-      <a href="/admin-page" class="active">
+      <a href="/admin-page">
         <span class="material-icons-sharp">
           dashboard
         </span>
         <h3>Dashboard</h3>
       </a>
-      <a href="/statistik_dashboard">
+      <a href="/statistik_dashboard" class="active">
         <span class="material-icons-sharp">
           insights
         </span>
@@ -212,136 +212,9 @@
     </div>
   </aside>
   <!-- ?End of Sidebar Section -->
-  <!-- * Main Content -->
   <div class="container">
-    <main>
-      <section class="home-section">
-        <div class="text">Dashboard</div>
-        <div class="container">
-          <!-- <h3 class="judul-survey">Survey Kepuasan Dinas Kependudukan dan Pencatatan Sipil Kota Semarang</h3> -->
-          <div class="container-fluid py-1">
-            <!-- <h2>Dashboard</h2> -->
-            <!-- Dropdown Filter Jenis Layanan -->
-          </div>
-          <div class="filter-container">
-            <h6 style="font-size:medium; font-weight: 600;">Pilih Berdasarkan Jenis Layanan</h6>
-            <div class="d-flex justify-content-between">
-              <!-- Tombol filter (ujung kiri) -->
-              <select id="jenis_layanan">
-                <option value="all">Semua Layanan</option>
-                <option value="Akta Perkawinan">Akta Perkawinan</option>
-                <option value="Akta Kelahiran">Akta Kelahiran</option>
-                <option value="Akta Kematian">Akta Kematian</option>
-                <option value="KTP Elektronik">KTP Elektronik</option>
-                <option value="Kartu Keluarga (KK)">Kartu Keluarga (KK)</option>
-                <option value="Kartu Identitas Anak (KIA)">Kartu Identitas Anak (KIA)</option>
-              </select>
-
-              <!-- <form action="/periode" method="post">
-                <label for="start_date">Tanggal Mulai:</label>
-                <input type="date" id="start_date" name="start_date">
-
-                <label for="end_date">Tanggal Berakhir:</label>
-                <input type="date" id="end_date" name="end_date">
-
-                <button type="submit">Cari</button>
-              </form> -->
-
-              <!-- Tombol Excel (ujung kanan) -->
-              <div class="btn-group dropleft">
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false"
-                  style="padding: 8px; margin-bottom: 3px; border-radius: 6px;">
-                  <i style="font-size: large;" class='bx bx-export'></i> Excel
-                </button>
-                <div class="dropdown-menu" x-placement="bottom-start"
-                  style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
-                  <a class="dropdown-item" href="/export-excel?jenis_layanan=all">Semua Jenis Layanan</a>
-                  <a class="dropdown-item" href="/export-excel?jenis_layanan=Akta%20Perkawinan">Akta Perkawinan</a>
-                  <a class="dropdown-item" href="/export-excel?jenis_layanan=Akta%20Kelahiran">Akta Kelahiran</a>
-                  <a class="dropdown-item" href="/export-excel?jenis_layanan=KTP%20Elektronik">KTP Elektronik</a>
-                  <a class="dropdown-item" href="/export-excel?jenis_layanan=Kartu%20Keluarga%20(KK)">Kartu Keluarga
-                    (KK)</a>
-                  <a class="dropdown-item" href="/export-excel?jenis_layanan=Kartu%20Identitas%20Anak%20(KIA)">Kartu
-                    Identitas Anak (KIA)</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Script Filter Jenis Layanan -->
-          <script type="text/javascript">
-            $(document).ready(function () {
-              $('#jenis_layanan').change(function () {
-                var selectedJenis = $(this).val();
-                $.ajax({
-                  url: '/admin-page',
-                  type: 'POST',
-                  data: { jenis_layanan: selectedJenis },
-                  success: function (response) {
-                    $('table').html(response); // Mengganti isi tabel dengan data yang diperbarui dari server
-                  },
-                  error: function (xhr, status, error) {
-                    console.log('Error:', error);
-                  }
-                });
-              });
-            });
-          </script>
-          <table>
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Jenis Layanan</th>
-                <th>Kritik</th>
-                <th>Saran</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="table-body">
-              {% for data in datadiris %}
-              <tr class="data-row">
-                <td scope="row">{{ loop.index }}</td>
-                <td style="width: 40vh;">{{ data.layanan }}</td>
-                <td>{{ data.boxKritik }}</td>
-                <td>{{ data.boxSaran }}</td>
-                <td class="detail-cell">Detail</td>
-                <!-- Simpan data usia, pendidikan, dan pekerjaan dalam data attribute -->
-                <td class="d-none" data-usia="{{ data.usia }}" data-pendidikan="{{ data.pendidikan }}"
-                  data-pekerjaan="{{ data.pekerjaan }}" data-skor="{{ data.skor }}"
-                  data-jenis_kelamin="{{ data.jenis_kelamin }}" data-waktu_dibuat="{{ data.waktu_dibuat }}"></td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        <!-- Modal -->
-        <div id="detailModal" class="modal-detail">
-          <div class="modal-detail-content">
-            <div>
-              <span class="close">&times;</span>
-              <h4 style="font-weight: bold; padding-top: 10px;">Detail</h4>
-              <hr>
-            </div>
-            <div id="modalContent"></div>
-          </div>
-        </div>
-        <!-- Pagination -->
-        <div aria-label="Page divigation example">
-          <ul class="pagination">
-            <li class="page-item" id="prevPage"><a class="page-link" style="margin-right: 5px; border-radius: 5px; "
-                href="#" onclick="prevPage()"><span aria-hidden="true">&laquo;</span></a></li>
-            <!-- Jumlah halaman akan ditambahkan secara dinamis di sini -->
-            <li class="page-item" id="pageNumber"></li>
-            <li class="page-item" id="nextPage"><a class="page-link" style="margin-left: 5px; border-radius: 5px;"
-                href="#" onclick="nextPage()"><span aria-hidden="true">&raquo;</span></a></li>
-          </ul>
-        </div>
-      </section>
-    </main>
-
-    <!-- * -->
     <!-- ?Form CRUD -->
-    <!-- <div class="box-card">
+    <div class="box-card">
       <h2>Jenis Layanan</h2>
       <form id="serviceForm">
         <input type="text" name="service_name" placeholder="Masukkan Jenis Layanan">
@@ -361,11 +234,9 @@
         </li>
         {% endfor %}
       </ul>
-    </div> -->
+    </div>
   </div>
-  <!-- * End of Main Content -->
 </body>
-
 <!-- Script of origin JS -->
 <script>
   const sideMenu = document.querySelector('aside');
@@ -403,7 +274,6 @@
   });
   // End of origin JS
 </script>
-
 <!-- Script of active sidebar -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -424,61 +294,4 @@
     });
   });
 </script>
-
-<!-- Script Pagination -->
-<script>
-  // Memanggil fungsi untuk menampilkan data awal
-  showPage(1);
-
-  // Fungsi untuk menampilkan data di halaman tertentu
-  function showPage(pageNum) {
-    var rows = $('tr.data-row');
-    var numPerPage = 10;
-    var totalPages = getTotalPages();
-
-    // Menyembunyikan semua baris data
-    rows.hide();
-
-    // Menampilkan baris data untuk halaman tertentu
-    var start = (pageNum - 1) * numPerPage;
-    var end = start + numPerPage;
-    rows.slice(start, end).show();
-
-    // Menampilkan nomor halaman
-    $('#pageNumber').empty();
-    for (var i = 1; i <= totalPages; i++) {
-      var pageLink = '<a class="page-link" href="#" onclick="showPage(' + i + ')">' + i + '</a>';
-      var pageItem = '<li class="page-item">' + pageLink + '</li>';
-      if (i === pageNum) {
-        pageItem = '<li class="page-item active">' + pageLink + '</li>';
-      }
-      $('#pageNumber').append(pageItem);
-    }
-  }
-
-  // Fungsi untuk menampilkan halaman sebelumnya
-  function prevPage() {
-    var currentPage = parseInt($('.page-item.active').text());
-    if (currentPage > 1) {
-      showPage(currentPage - 1);
-    }
-  }
-
-  // Fungsi untuk menampilkan halaman berikutnya
-  function nextPage() {
-    var currentPage = parseInt($('.page-item.active').text());
-    var totalPages = getTotalPages();
-    if (currentPage < totalPages) {
-      showPage(currentPage + 1);
-    }
-  }
-
-  // Fungsi untuk mendapatkan total halaman
-  function getTotalPages() {
-    var numRows = $('tr.data-row').length;
-    var numPerPage = 10;
-    return Math.ceil(numRows / numPerPage);
-  }
-</script>
-
 </html>
