@@ -140,19 +140,6 @@ def admin():
 def statistik():
     return render_template('statistik_dashboard.html')
 
-@app.route('/jenis_kelamin_data')
-def jenis_kelamin_data():
-    # Ambil data jenis kelamin dari koleksi TData30
-    jenis_kelamin = db.TData30.distinct('jenis_kelamin')
-
-    # Hitung jumlah masing-masing jenis kelamin
-    data = {}
-    for jk in jenis_kelamin:
-        count = db.TData30.count_documents({'jenis_kelamin': jk})
-        data[jk] = count
-
-    return jsonify(data)
-
 @app.route('/form_dashboard')
 def form():
     services = db.services.find()  # Memuat semua data layanan untuk ditampilkan di halaman admin
