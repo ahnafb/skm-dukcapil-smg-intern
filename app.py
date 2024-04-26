@@ -1,11 +1,11 @@
-from bson import ObjectId
 from flask import (Flask, render_template, jsonify, request, redirect, url_for, send_file)
 from pymongo import MongoClient
-# import jwt
+import jwt
 import hashlib
 import csv
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
+from bson import ObjectId
 import pandas as pd 
 from flask_cors import CORS 
 
@@ -14,6 +14,8 @@ app = Flask(__name__)
 connection_string = "mongodb+srv://ahnafb:nanaf2730@cluster0.qzd2yiy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(connection_string)
 db = client.db_VT30DATA
+
+SECRET_KEY = "SKMDUKCAPILSMG"
 
 def hitung_skor(pertanyaan):
     skor = 0
@@ -27,7 +29,6 @@ def hitung_skor(pertanyaan):
         elif nilai == 'Tidak Sesuai' or nilai == 'Tidak Mudah' or nilai == 'Tidak Cepat' or nilai == 'Sangat Mahal' or nilai == 'Tidak Sesuai' or nilai == 'Tidak Kompeten' or nilai == 'Tidak sopan dan tidak ramah' or nilai == 'Buruk' or nilai == 'Tidak ada' or nilai == 'Tidak Puas':
             skor += 2.5
     return skor
-
 
 @app.route('/')
 def home():
@@ -135,7 +136,7 @@ def admin():
         services = db.services.find()  # Memuat semua data layanan untuk ditampilkan di halaman admin
         return render_template('admin-page.html', datadiris=datadiris, services=services)
 
-# !!!!!!!
+# !!!!!!! admin page
 @app.route('/statistik_dashboard')
 def statistik():
     return render_template('statistik_dashboard.html')
@@ -164,8 +165,9 @@ def delete_service():
     db.services.delete_one({'_id': ObjectId(service_id)})
     return jsonify({'message': 'Jenis Layanan berhasil dihapus!'})  
     
-# !!!!!!
-# Version1 
+# !!!!!! end of admin page
+
+# ! Version1 Excel
 @app.route('/export-excel', methods=['GET'])
 def export_excel():
     # Ambil jenis layanan dari parameter URL
@@ -215,6 +217,74 @@ def export_excel():
 
     # Kirim file Excel ke pengguna
     return send_file(filename, as_attachment=True)
+
+
+# ! Start of Login
+
+@app.route("/login", methods=['GET'])
+def login():
+    msg = request.args.get("msg")
+    return render_template('login.html', msg=msg)
+
+@app.route('/sign_up/check_dup', methods=['POST'])
+def check_dup():
+    username_receive = request.form['username_give']
+    exists = bool(db.users.find_one({"username": username_receive}))
+    return jsonify({'result': 'success', 'exists': exists})
+
+@app.route("/sign_up/save", methods=["POST"])
+def sign_up():
+    username_receive = request.form['username_give']
+    password_receive = request.form['password_give']
+    password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    doc = {
+        "username": username_receive,                               # id
+        "password": password_hash,                                  # password
+        "profile_name": username_receive,                           # user's name is set to their id by default
+        "profile_pic": "",                                          # profile image file name
+        "profile_pic_real": "profile_pics/profile_placeholder.png", # a default profile image
+        "profile_info": ""                                          # a profile description
+    }
+    db.users.insert_one(doc)
+    return jsonify({'result': 'success'})
+
+@app.route("/sign_in", methods=["POST"])
+def sign_in():
+    # Sign in
+    username_receive = request.form["username_give"]
+    password_receive = request.form["password_give"]
+    pw_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
+    result = db.users.find_one(
+        {
+            "username": username_receive,
+            "password": pw_hash,
+        }
+    )
+    if result:
+        payload = {
+            "id": username_receive,
+            # the token will be valid for 24 hours
+            "exp": datetime.utcnow() + timedelta(seconds=60 * 60 * 24),
+        }
+        token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+
+        return jsonify(
+            {
+                "result": "success",
+                "token": token,
+            }
+        )
+    # Let's also handle the case where the id and
+    # password combination cannot be found
+    else:
+        return jsonify(
+            {
+                "result": "fail",
+                "msg": "We could not find a user with that id/password combination",
+            }
+        )
+
+# ! End of Login
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
