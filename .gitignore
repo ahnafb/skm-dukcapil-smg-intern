@@ -2,3 +2,4 @@ post.py
 .gitignore
 /ztrash
 test.py
+.env

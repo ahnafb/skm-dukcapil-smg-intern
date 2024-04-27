@@ -8,14 +8,22 @@ from werkzeug.utils import secure_filename
 from bson import ObjectId
 import pandas as pd 
 from flask_cors import CORS 
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__)
 
-connection_string = "mongodb+srv://ahnafb:nanaf2730@cluster0.qzd2yiy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-client = MongoClient(connection_string)
-db = client.db_VT30DATA
+# Load .env file
+load_dotenv()
 
-SECRET_KEY = "SKMDUKCAPILSMG"
+# Read environment variables
+connection_string = os.getenv("DB_CONNECTION_STRING")
+db_name = os.getenv("DB_NAME")
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+# Set up MongoDB connection
+client = MongoClient(connection_string)
+db = client[db_name]
 
 def hitung_skor(pertanyaan):
     skor = 0
