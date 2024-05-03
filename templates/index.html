@@ -136,6 +136,7 @@
           $('#skor-container').show();
           $('.container').hide();
           $('.judul-survey').hide();
+          $('.footer').hide();
 
           // Menampilkan skor
           $('#skor-container').text('Skor Penilaian Anda : ' + skor + '/100');
@@ -246,6 +247,7 @@
     <div class="mb-4 bg-light rounded-3 tampil-data"
       style="border: 1px solid black; margin-top: 5vh; padding-inline: 2.5vh;">
       <div class="container-fluid py-4">
+        <!-- ?Jenis Layanan -->
         <h1 class="display-6 fw-bold">JENIS LAYANAN</h1>
         <div class="mb-3">
           <h5>Layanan</h5>
@@ -261,44 +263,26 @@
         <!-- <div class="mb-3">
             <input type="text" class="form-control" id="nama" placeholder="Nama"/>
           </div> -->
+        <!-- Jenis Kelamin -->
         <div class="mb-3">
           <h5>Jenis Kelamin</h5>
-          <input type="radio" class="form-check-input" id="jenis-kelamin-laki" name="kelamin_give" value="Laki-Laki">
-          <label class="form-check-label" for="jenis-kelamin-laki">Laki-Laki</label>
-          <input type="radio" class="form-check-input" id="jenis-kelamin-perempuan" name="kelamin_give"
-            value="Perempuan">
-          <label class="form-check-label" for="jenis-kelamin-perempuan">Perempuan</label>
+          {% for gender in genders %}
+          <input type="radio" class="form-check-input" id="jenis-kelamin-{{ gender._id }}" name="kelamin_give"
+            value="{{ gender.name }}">
+          <label class="form-check-label" for="jenis-kelamin-{{ gender._id }}">{{ gender.name }}</label>
+          {% endfor %}
         </div>
+
         <div class="mb-3">
-          <!-- <label class="form-label">Usia</label><br> -->
           <h5>Usia</h5>
-          <input type="radio" class="form-check-input" id="usia-17-20" name="usia_give" value="17-20">
-          <label class="form-check-label" for="usia-17-20">17-20</label><br>
-
-          <input type="radio" class="form-check-input" id="usia-21-25" name="usia_give" value="21-25">
-          <label class="form-check-label" for="usia-21-25">21-25</label><br>
-
-          <input type="radio" class="form-check-input" id="usia-26-30" name="usia_give" value="26-30">
-          <label class="form-check-label" for="usia-26-30">26-30</label><br>
-
-          <input type="radio" class="form-check-input" id="usia-31-35" name="usia_give" value="31-35">
-          <label class="form-check-label" for="usia-31-35">31-35</label><br>
-
-          <input type="radio" class="form-check-input" id="usia-36-40" name="usia_give" value="36-40">
-          <label class="form-check-label" for="usia-36-40">36-40</label><br>
-
-          <input type="radio" class="form-check-input" id="usia-41-45" name="usia_give" value="41-45">
-          <label class="form-check-label" for="usia-41-45">41-45</label><br>
-
-          <input type="radio" class="form-check-input" id="usia-46-50" name="usia_give" value="46-50">
-          <label class="form-check-label" for="usia-46-50">46-50</label><br>
-
-          <input type="radio" class="form-check-input" id="usia-51-55" name="usia_give" value="51-55">
-          <label class="form-check-label" for="usia-51-55">51-55</label><br>
-
-          <input type="radio" class="form-check-input" id="usia-56-or-more" name="usia_give" value="≥ 56">
-          <label class="form-check-label" for="usia-56-or-more">≥ 56</label><br>
+          {% for age in ages %}
+          <input type="radio" class="form-check-input" id="usia-{{ age.range }}" name="usia_give"
+            value="{{ age.range }}">
+          <label class="form-check-label" for="usia-{{ age.range }}">{{ age.range }}</label><br>
+          
+          {% endfor %}
         </div>
+
         <div class="mb-3">
           <h5>Pendidikan</h5>
           <input type="radio" class="form-check-input" id="pendidikan-SD" name="pendidikan_give" value="SD">
@@ -512,8 +496,9 @@
 <footer class="footer">
   <div class="container">
     <p>
-      <a href="/login" style="text-decoration: none; color: inherit;">© 2024</a> | Dinas Kependudukan dan Pencatatan Sipil Kota Semarang
-    </p>    
+      <a href="/login" style="text-decoration: none; color: inherit;">© 2024</a> | Dinas Kependudukan dan Pencatatan
+      Sipil Kota Semarang
+    </p>
   </div>
 </footer>
 

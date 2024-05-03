@@ -1,61 +1,61 @@
-<table>
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>Jenis Layanan</th>
-        <th>Kritik</th>
-        <th>Saran</th>
-        <th>Aksi</th>
-      </tr>
-    </thead>
-    <tbody id="table-body">
-      {% for data in datadiris %}
-      <tr class="data-row">
-        <td scope="row">{{ loop.index }}</td>
-        <td style="width: 40vh;">{{ data.layanan }}</td>
-        <td>{{ data.boxKritik }}</td>
-        <td>{{ data.boxSaran }}</td>
-        <td class="detail-cell">Detail</td>
-        <!-- <td style="text-align: center; cursor: pointer; color: rgb(255, 51, 51); padding: 0px 20px 0px 20px;"><u>Detail</u></td> -->
-        <!-- Simpan data usia, pendidikan, dan pekerjaan dalam data attribute -->
-        <td class="d-none" data-usia="{{ data.usia }}" data-pendidikan="{{ data.pendidikan }}" data-pekerjaan="{{ data.pekerjaan }}"  data-skor="{{ data.skor }}" data-jenis_kelamin="{{ data.jenis_kelamin }}"></td>
-      </tr>
-      {% endfor %}
-    </tbody>
+<table style="border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Jenis Layanan</th>
+      <th>Kritik</th>
+      <th>Saran</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody id="table-body">
+    {% for data in datadiris %}
+    <tr class="data-row">
+      <td scope="row">{{ loop.index }}</td>
+      <td style="width: 40vh;">{{ data.layanan }}</td>
+      <td>{{ data.boxKritik }}</td>
+      <td>{{ data.boxSaran }}</td>
+      <td class="detail-cell">Detail</td>
+      <!-- <td style="text-align: center; cursor: pointer; color: rgb(255, 51, 51); padding: 0px 20px 0px 20px;"><u>Detail</u></td> -->
+      <!-- Simpan data usia, pendidikan, dan pekerjaan dalam data attribute -->
+      <td class="d-none" data-usia="{{ data.usia }}" data-pendidikan="{{ data.pendidikan }}"
+      data-pekerjaan="{{ data.pekerjaan }}" data-skor="{{ data.skor }}" data-jenis_kelamin="{{ data.jenis_kelamin }}"
+      data-waktu_dibuat="{{ data.waktu_dibuat }}">
+    </td>    
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
-  <!-- Modal -->
-  <div id="detailModal" class="modal-detail">
-      <div class="modal-detail-content">
-        <div>
-            <span class="close">&times;</span>
-            <h4 style="font-weight: bold; padding-top: 10px;">Detail</h4>
-            <hr>
-        </div>
-        <div id="modalContent">
+<!-- Modal -->
+<div id="detailModal" class="modal-detail">
+  <div class="modal-detail-content">
+    <div>
+      <span class="close">&times;</span>
+      <h4 style="font-weight: bold; padding-top: 10px;">Detail</h4>
+      <hr>
+    </div>
+    <div id="modalContent">
 
-        </div>
-      </div>
+    </div>
   </div>
+</div>
 <!-- Modal Pop Up untuk Detail -->
 <script>
-    $(document).ready(function () {
-      // Menambahkan event listener untuk baris tabel
-      $('tr.data-row').click(function () {
-        // Ambil data dari baris yang diklik
-        var layanan = $(this).find('td:eq(1)').text();
-        var kritik = $(this).find('td:eq(2)').text();
-        var saran = $(this).find('td:eq(3)').text();
+  $(document).ready(function () {
+    // Menambahkan event listener untuk baris tabel dengan event delegation
+    $(document).on('click', 'tr.data-row', function () {
+      var layanan = $(this).find('td:eq(1)').text();
+      var kritik = $(this).find('td:eq(2)').text();
+      var saran = $(this).find('td:eq(3)').text();
 
-        // tes
-        var usia = $(this).find('.d-none').data('usia');
-        var jenis_kelamin = $(this).find('.d-none').data('jenis_kelamin');
-        var pendidikan = $(this).find('.d-none').data('pendidikan');
-        var pekerjaan = $(this).find('.d-none').data('pekerjaan');
-        var skor = $(this).find('.d-none').data('skor');
-        var waktu_dibuat = $(this).find('.d-none').data('waktu_dibuat');
+      var usia = $(this).find('.d-none').data('usia');
+      var jenis_kelamin = $(this).find('.d-none').data('jenis_kelamin');
+      var pendidikan = $(this).find('.d-none').data('pendidikan');
+      var pekerjaan = $(this).find('.d-none').data('pekerjaan');
+      var skor = $(this).find('.d-none').data('skor');
+      var waktu_dibuat = $(this).find('.d-none').data('waktu_dibuat');
 
-        // Menetapkan nilai data ke dalam modal
-        $('#modalContent').html('<p><strong>Jenis Layanan : </strong>' + layanan + '</p>' +
+      $('#modalContent').html('<p><strong>Jenis Layanan : </strong>' + layanan + '</p>' +
         '<p><strong>Kritik <tab>: </strong>' + kritik + '</p>' +
         '<p><strong>Saran: </strong>' + saran + '</p> <hr>' +
         '<h5><strong>Biodata Responden</strong>' + '</h5>' +
@@ -65,22 +65,23 @@
         '<p><strong>Pekerjaan: </strong>' + pekerjaan + '</p>' +
         '<p><strong>Skor: </strong>' + skor + '/100' + '</p>' +
         '<p><strong>Tanggal dan Waktu Dibuat: </strong>' + waktu_dibuat + '</p>'
-        );      
+      );
 
-        // Tampilkan modal
-        $('#detailModal').css('display', 'block');
-      });
-
-      // Menutup modal saat tombol "Close" atau area di luar modal diklik
-      $('.close').click(function () {
-        $('#detailModal').css('display', 'none');
-      });
-
-      $(window).click(function (event) {
-        if (event.target == $('#detailModal')[0]) {
-          $('#detailModal').css('display', 'none');
-        }
-      });
+      $('#detailModal').css('display', 'block');
     });
+
+  // Menutup modal saat tombol "Close" di dalam modal diklik
+  $(document).on('click', '.modal-detail .close', function () {
+    $(this).closest('.modal-detail').fadeOut(); // Menggunakan closest() untuk menemukan modal terdekat
+  });
+
+    // Menutup modal saat mengklik di luar modal
+    $(window).click(function (event) {
+      if (event.target == $('#detailModal')[0]) {
+        $('#detailModal').fadeOut();
+      }
+    });
+  });
 </script>
+
 </html>

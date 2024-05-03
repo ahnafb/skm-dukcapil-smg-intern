@@ -259,6 +259,7 @@
                   <a class="dropdown-item" href="/export-excel?jenis_layanan=all">Semua Jenis Layanan</a>
                   <a class="dropdown-item" href="/export-excel?jenis_layanan=Akta%20Perkawinan">Akta Perkawinan</a>
                   <a class="dropdown-item" href="/export-excel?jenis_layanan=Akta%20Kelahiran">Akta Kelahiran</a>
+                  <a class="dropdown-item" href="/export-excel?jenis_layanan=Akta%20Kematian">Akta Kematian</a>
                   <a class="dropdown-item" href="/export-excel?jenis_layanan=KTP%20Elektronik">KTP Elektronik</a>
                   <a class="dropdown-item" href="/export-excel?jenis_layanan=Kartu%20Keluarga%20(KK)">Kartu Keluarga
                     (KK)</a>
@@ -339,30 +340,6 @@
       </section>
     </main>
 
-    <!-- * -->
-    <!-- ?Form CRUD -->
-    <!-- <div class="box-card">
-      <h2>Jenis Layanan</h2>
-      <form id="serviceForm">
-        <input type="text" name="service_name" placeholder="Masukkan Jenis Layanan">
-        <button type="submit">Add</button>
-      </form>
-      <div id="message"></div>
-      <ul id="serviceList">
-        {% for service in services %}
-        <li>
-          <span class="serviceName">{{ service.name }}</span>
-          <button class="editBtn" data-id="{{ service._id }}">Edit</button>
-          <button class="deleteBtn" data-id="{{ service._id }}">Delete</button>
-          <form class="editForm" style="display: none;">
-            <input type="text" name="edited_name" value="{{ service.name }}">
-            <button type="submit">Save</button>
-          </form>
-        </li>
-        {% endfor %}
-      </ul>
-    </div> -->
-  </div>
   <!-- * End of Main Content -->
 </body>
 

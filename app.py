@@ -41,10 +41,11 @@ def hitung_skor(pertanyaan):
 @app.route('/')
 def home():
     # Ambil data jenis layanan dari database
-    services = db.services.find() 
-
+    services = db.services.find()
+    genders = db.genders.find()
+    ages = db.ages.find() 
     # Kirim data ke template HTML
-    return render_template('index.html', services=services)
+    return render_template('index.html', services=services, genders=genders, ages=ages)
 
 @app.route('/datadiri', methods=['GET'])
 def show_datadiri():
@@ -142,18 +143,22 @@ def admin():
     else:
         datadiris = db.TData30.find()  # Mengambil semua data dari koleksi datadiri
         services = db.services.find()  # Memuat semua data layanan untuk ditampilkan di halaman admin
-        return render_template('admin-page.html', datadiris=datadiris, services=services)
+        genders = db.genders.find()  # Memuat semua data jenis kelamin untuk ditampilkan di halaman admin
+        return render_template('admin-page.html', datadiris=datadiris, services=services, genders=genders)
 
-# !!!!!!! admin page
 @app.route('/statistik_dashboard')
 def statistik():
     return render_template('statistik_dashboard.html')
 
+# !!!!!!! Form Page Tampil CRUD
 @app.route('/form_dashboard')
 def form():
     services = db.services.find()  # Memuat semua data layanan untuk ditampilkan di halaman admin
-    return render_template('form_dashboard.html', services=services)
+    genders = db.genders.find()  # Memuat semua data jenis kelamin untuk ditampilkan di halaman admin
+    ages = db.ages.find() 
+    return render_template('form_dashboard.html', services=services, genders=genders, ages=ages)
 
+# !!!!!!! Form page ->> CRUD Jenis Layanan
 @app.route('/add_service', methods=['POST'])
 def add_service():
     service_name = request.form['service_name']
@@ -172,6 +177,50 @@ def delete_service():
     service_id = request.form['service_id']
     db.services.delete_one({'_id': ObjectId(service_id)})
     return jsonify({'message': 'Jenis Layanan berhasil dihapus!'})  
+
+# !!!!!!! Form page ->> CRUD Jenis Kelamin
+@app.route('/add_gender', methods=['POST'])
+def add_gender():
+    gender_name = request.form['gender_name']
+    db.genders.insert_one({'name': gender_name})
+    return jsonify({'message': 'Jenis Kelamin berhasil ditambahkan!'})
+
+@app.route('/edit_gender', methods=['POST'])
+def edit_gender():
+    gender_id = request.form['gender_id']
+    new_name = request.form['new_name']
+    db.genders.update_one({'_id': ObjectId(gender_id)}, {'$set': {'name': new_name}})
+    return jsonify({'message': 'Jenis Kelamin berhasil di-update!'})
+
+@app.route('/delete_gender', methods=['POST'])
+def delete_gender():
+    gender_id = request.form['gender_id']
+    db.genders.delete_one({'_id': ObjectId(gender_id)})
+    return jsonify({'message': 'Jenis Kelamin berhasil dihapus!'})
+
+# !!!!!!! Form page ->> CRUD Usia
+# Route untuk menambah usia
+@app.route('/add_age', methods=['POST'])
+def add_age():
+    age_range = request.form['age_range']
+    db.ages.insert_one({'range': age_range})
+    return jsonify({'message': 'Usia berhasil ditambahkan!'})
+
+# Route untuk mengedit usia
+@app.route('/edit_age', methods=['POST'])
+def edit_age():
+    age_id = request.form['age_id']
+    new_range = request.form['new_range']
+    db.ages.update_one({'_id': ObjectId(age_id)}, {'$set': {'range': new_range}})
+    return jsonify({'message': 'Usia berhasil di-update!'})
+
+# Route untuk menghapus usia
+@app.route('/delete_age', methods=['POST'])
+def delete_age():
+    age_id = request.form['age_id']
+    db.ages.delete_one({'_id': ObjectId(age_id)})
+    return jsonify({'message': 'Usia berhasil dihapus!'})
+
     
 # !!!!!! end of admin page
 

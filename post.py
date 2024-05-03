@@ -1,24 +1,32 @@
-# Import MongoClient dari pymongo
+import os
+from dotenv import load_dotenv
 from pymongo import MongoClient
 
-# Buat koneksi ke MongoDB
-connection_string = "mongodb+srv://ahnafb:nanaf2730@cluster0.qzd2yiy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+# Load .env file
+load_dotenv()
+
+# Read environment variables
+connection_string = os.getenv("DB_CONNECTION_STRING")
+db_name = os.getenv("DB_NAME")
+
+# Set up MongoDB connection
 client = MongoClient(connection_string)
+db = client[db_name]
 
-# Pilih database
-db = client.db_VT30DATA
-
-# Data pilihan jenis layanan
-jenis_layanan_data = [
-    "Pelayanan Akta Perkawinan",
-    "Pelayanan Akta Kelahiran",
-    "Pelayanan Akta Kematian",
-    "KTP Elektronik",
-    "Kartu Keluarga (KK)",
-    "Kartu Identitas Anak (KIA)"
+# Data pilihan ages
+ages_data = [
+    "17-20",
+    "21-25",
+    "26-30",
+    "31-35",
+    "36-40",
+    "41-45",
+    "46-50",
+    "51-55",
+    "≥ 56"
 ]
 
-# Insert data pilihan jenis layanan ke dalam koleksi 'jenis_layanan'
-db.jenis_layanan.insert_many([{'pilihan_layanan': layanan} for layanan in jenis_layanan_data])
+# Insert data pilihan ages ke dalam koleksi 'ages'
+db.ages.insert_many([{'range': ages} for ages in ages_data])
 
-print("Data jenis layanan telah dimasukkan ke dalam database.")
+print("Data pilihan ages telah dimasukkan ke dalam database.")

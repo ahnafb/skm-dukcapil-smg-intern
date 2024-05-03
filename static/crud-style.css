@@ -1,0 +1,584 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --color-primary: #6C9BCF;
+    --color-danger: #FF0060;
+    --color-success: #1B9C85;
+    --color-warning: #F7D060;
+    --color-white: #fff;
+    --color-info-dark: #7d8da1;
+    --color-dark: #363949;
+    --color-light: rgba(132, 139, 200, 0.18);
+    --color-dark-variant: #677483;
+    --color-background: #f6f6f9;
+
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 1.2rem;
+
+    --card-padding: 1.8rem;
+    --padding-1: 1.2rem;
+
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    appearance: 0;
+    border: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 15px;
+}
+
+body {
+    display: grid;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.88rem;
+    user-select: none;
+    overflow-x: hidden;
+    color: var(--color-dark);
+    background-color: var(--color-background);
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    /* Retain if horizontal centering is needed */
+    gap: 1.8rem;
+    grid-template-columns: 15rem auto;
+}
+
+a {
+    color: var(--color-dark);
+}
+
+img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+}
+
+h1 {
+    font-weight: 800;
+    font-size: 1.8rem;
+}
+
+h2 {
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+h3 {
+    font-weight: 500;
+    font-size: 0.87rem;
+}
+
+small {
+    font-size: 0.76rem;
+}
+
+p {
+    color: var(--color-dark-variant);
+}
+
+b {
+    color: var(--color-dark);
+}
+
+.text-muted {
+    color: var(--color-info-dark);
+}
+
+.primary {
+    color: var(--color-primary);
+}
+
+.danger {
+    color: var(--color-danger);
+}
+
+.success {
+    color: var(--color-success);
+}
+
+.warning {
+    color: var(--color-warning);
+}
+
+aside {
+    padding-left: 4.5vh;
+    width: min-content;
+    height: 100vh;
+    margin-top: 5px;
+}
+
+aside .toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.4rem;
+}
+
+aside .toggle .logo {
+    display: flex;
+    gap: 0.5rem;
+}
+
+aside .toggle .logo img {
+    width: 2rem;
+    height: max-content;
+}
+
+aside .toggle .close {
+    padding-right: 1rem;
+    display: none;
+}
+
+aside .sidebar {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-white);
+    box-shadow: var(--box-shadow);
+    border-radius: 15px;
+    height: 88vh;
+    position: relative;
+    top: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+aside .sidebar:hover {
+    box-shadow: none;
+}
+
+aside .sidebar a {
+    display: flex;
+    align-items: center;
+    color: var(--color-primary);
+    height: 3.7rem;
+    gap: 1rem;
+    position: relative;
+    margin-left: 2rem;
+    transition: all 0.3s ease;
+}
+
+aside .sidebar a span {
+    font-size: 1.6rem;
+    transition: all 0.3s ease;
+}
+
+aside .sidebar a:last-child {
+    position: absolute;
+    bottom: 2rem;
+    width: 100%;
+}
+
+aside .sidebar a.active {
+    width: 100%;
+    color: var(--color-primary);
+    background-color: var(--color-light);
+    margin-left: 0;
+    border-radius: 14px;
+}
+
+aside .sidebar a.active::before {
+    content: '';
+    width: 6px;
+    height: 18px;
+    background-color: var(--color-primary);
+}
+
+aside .sidebar a.active span {
+    color: var(--color-primary);
+    margin-left: calc(1rem - 3px);
+}
+
+aside .sidebar a:hover {
+    color: var(--color-primary);
+}
+
+aside .sidebar a:hover span {
+    margin-left: 0.6rem;
+}
+
+aside .sidebar .message-count {
+    background-color: var(--color-primary);
+    padding: 2px 6px;
+    color: var(--color-white);
+    font-size: 11px;
+    border-radius: var(--border-radius-1);
+}
+
+main {
+    margin-top: 1.4rem;
+}
+
+.right-section {
+    margin-top: 1.4rem;
+    width: max-content;
+}
+
+.right-section .nav {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    /* Atur lebar elemen di sini */
+}
+
+.right-section .nav button {
+    display: none;
+}
+
+.right-section .dark-mode {
+    background-color: var(--color-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 1.6rem;
+    width: 4.2rem;
+    cursor: pointer;
+    border-radius: var(--border-radius-1);
+}
+
+.right-section .dark-mode span {
+    font-size: 1.2rem;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right-section .dark-mode span.active {
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--border-radius-1);
+}
+
+.right-section .nav .profile {
+    display: flex;
+    gap: 0.5rem;
+    text-align: right;
+}
+
+.right-section .nav .profile .profile-photo {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.right-section .user-profile {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 1rem;
+    background-color: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.right-section .user-profile:hover {
+    box-shadow: none;
+}
+
+.right-section .user-profile img {
+    width: 11rem;
+    height: auto;
+    margin-bottom: 0.8rem;
+    border-radius: 50%;
+}
+
+.right-section .user-profile h2 {
+    margin-bottom: 0.2rem;
+}
+
+/* !CURD ERA */
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: flex-start;
+}
+
+/* !CRUD FORM */
+.box-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 500px;
+    background-color: #f9f9f9;
+    width: 100%;
+}
+
+.box-card h2 {
+    margin-bottom: 10px;
+}
+
+/* !CRUD for Jenis Layanan*/
+#serviceForm input[type="text"] {
+    width: calc(100% - 80px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#serviceForm button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+}
+
+#serviceForm button:hover {
+    background-color: #45a049;
+}
+
+#serviceList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#serviceList li {
+    margin-bottom: 10px;
+}
+
+.serviceName {
+    font-weight: bold;
+}
+
+.editForm input[type="text"] {
+    width: calc(100% - 80px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.editForm button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2196f3;
+    color: white;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.editForm button:hover {
+    background-color: #1e87dc;
+}
+
+.deleteBtn {
+    margin-left: 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f44336;
+    color: white;
+    cursor: pointer;
+}
+
+.deleteBtn:hover {
+    background-color: #d32f2f;
+}
+
+.editBtn {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2196f3;
+    color: white;
+    cursor: pointer;
+}
+
+.editBtn button:hover {
+    background-color: #0767b6;
+}
+
+/* !Crud Jenis Kelamin */
+#genderForm input[type="text"] {
+    width: calc(100% - 80px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#genderForm button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+}
+
+#genderForm button:hover {
+    background-color: #45a049;
+}
+
+/* List CSS */
+#genderList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#genderList li {
+    margin-bottom: 10px;
+}
+
+.genderName {
+    font-weight: bold;
+}
+
+/* Edit Form CSS */
+.editGenderForm input[type="text"] {
+    width: calc(100% - 80px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.editGenderForm button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2196f3;
+    color: white;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.editGenderForm button:hover {
+    background-color: #1e87dc;
+}
+
+/* Delete Button CSS */
+.deleteGenderBtn {
+    margin-left: 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f44336;
+    color: white;
+    cursor: pointer;
+}
+
+.deleteGenderBtn:hover {
+    background-color: #d32f2f;
+}
+
+/* Edit Button CSS */
+.editGenderBtn {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2196f3;
+    color: white;
+    cursor: pointer;
+}
+
+.editGenderBtn:hover {
+    background-color: #0767b6;
+}
+
+/* !Crud Usia */
+/* CRUD Usia */
+#ageForm input[type="text"] {
+    width: calc(100% - 80px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#ageForm button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+}
+
+#ageForm button:hover {
+    background-color: #45a049;
+}
+
+/* List CSS */
+#ageList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#ageList li {
+    margin-bottom: 10px;
+}
+
+.ageRange {
+    font-weight: bold;
+}
+
+/* Edit Form CSS */
+.editAgeForm input[type="text"] {
+    width: calc(100% - 80px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.editAgeForm button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2196f3;
+    color: white;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.editAgeForm button:hover {
+    background-color: #1e87dc;
+}
+
+/* Delete Button CSS */
+.deleteAgeBtn {
+    margin-left: 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f44336;
+    color: white;
+    cursor: pointer;
+}
+
+.deleteAgeBtn:hover {
+    background-color: #d32f2f;
+}
+
+/* Edit Button CSS */
+.editAgeBtn {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2196f3;
+    color: white;
+    cursor: pointer;
+}
+
+.editAgeBtn:hover {
+    background-color: #0767b6;
+}

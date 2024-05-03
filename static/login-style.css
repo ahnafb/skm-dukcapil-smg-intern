@@ -55,6 +55,13 @@ body {
 }
 
 #input-password,
-#input-username {
+#input-username,
+#input-password2 {
     border: #e8344e 1px solid;
+}
+
+#input-password::placeholder,
+#input-username::placeholder,
+#input-password2::placeholder {
+    color: #858585;
 }

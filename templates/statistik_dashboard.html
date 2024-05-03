@@ -32,49 +32,6 @@
   <title>Survey Kepuasan Masyarakat Dinas Kependudukan dan Pencatatan Sipil Kota Semarang</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
-  <script>
-    $(document).ready(function () {
-      viewing();
-    });
-
-
-    function viewing() {
-      $.ajax({
-        type: "GET",
-        url: "/datadiri?sample_give=halo!",
-        data: {},
-        success: function (response) {
-          console.log(response)
-        },
-      });
-    }
-
-    function posting() {
-      // let nama = $('#nama').val();
-      let jenisKelamin = $('input[name="kelamin_give"]:checked').val();
-      let umur = $('input[name="usia_give"]:checked').val();
-      let pendidikan = $('input[name="pendidikan_give"]:checked').val();
-      let pekerjaan = $('input[name="pekerjaan_give"]:checked').val();
-      let pekerjaanLainnya = $('#pekerjaan-lainnya-input').val();
-      $.ajax({
-        type: "POST",
-        url: "/datadiri",
-        data: {
-          // nama_give : nama,
-          kelamin_give: jenisKelamin,
-          usia_give: umur,
-          pendidikan_give: pendidikan,
-          pekerjaan_give: pekerjaan,
-          pekerjaan_give: pekerjaanLainnya
-        },
-        success: function (response) {
-          console.log(response)
-          $('.alert-success').show();
-          $('.alert-danger').hide();
-        },
-      });
-    }
-  </script>
   <!-- Modal Pop Up untuk Detail -->
   <script>
     $(document).ready(function () {
@@ -126,7 +83,6 @@
 </head>
 
 <body>
-  <!-- ?Sidebar Section -->
   <aside>
     <div class="toggle">
       <div class="logo">
@@ -211,13 +167,11 @@
 
     </div>
   </aside>
-  <!-- ?End of Sidebar Section -->
 </body>
-<!-- HTML -->
 <!-- HTML -->
 <canvas id="genderChart" width="400" height="400""></canvas>
 
-<!-- JavaScript -->
+<!-- TODO: Chart -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   // Data berdasarkan jenis kelamin

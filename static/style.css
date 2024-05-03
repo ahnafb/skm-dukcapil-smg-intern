@@ -8,6 +8,7 @@ body {
   padding-top: 110px;
 }
 
+
 .top-image {
   z-index: 100;
   width: 100%;
@@ -251,7 +252,7 @@ p {
 
 /* Footer */
 .footer {
-  background-color: #f2f2f2;
+  background-color: white;
   color: #333;
   padding: 1rem 0;
   text-align: center;

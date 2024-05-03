@@ -27,7 +27,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style-admin.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='crud-style.css') }}">
   <script src="{{ url_for('static', filename='script.js') }}"></script>
   <title>Survey Kepuasan Masyarakat Dinas Kependudukan dan Pencatatan Sipil Kota Semarang</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
@@ -235,6 +235,50 @@
         {% endfor %}
       </ul>
     </div>
+    <!-- !Jenis Kelamin -->
+    <div class="box-card">
+      <h2>Jenis Kelamin</h2>
+      <form id="genderForm">
+        <input type="text" name="gender_name" placeholder="Masukkan Jenis Kelamin">
+        <button type="submit">Add</button>
+      </form>
+      <div id="message"></div>
+      <ul id="genderList">
+        {% for gender in genders %}
+        <li>
+          <span class="genderName">{{ gender.name }}</span>
+          <button class="editGenderBtn" data-id="{{ gender._id }}">Edit</button>
+          <button class="deleteGenderBtn" data-id="{{ gender._id }}">Delete</button>
+          <form class="editGenderForm" style="display: none;">
+            <input type="text" name="edited_name" value="{{ gender.name }}">
+            <button type="submit">Save</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <!-- !Usia -->
+    <div class="box-card">
+      <h2>Usia</h2>
+      <form id="ageForm">
+        <input type="text" name="age_range" placeholder="Masukkan Rentang Usia">
+        <button type="submit">Add</button>
+      </form>
+      <div id="message"></div>
+      <ul id="ageList">
+        {% for age in ages %}
+        <li>
+          <span class="ageRange">{{ age.range }}</span>
+          <button class="editAgeBtn" data-id="{{ age._id }}">Edit</button>
+          <button class="deleteAgeBtn" data-id="{{ age._id }}">Delete</button>
+          <form class="editAgeForm" style="display: none;">
+            <input type="text" name="edited_range" value="{{ age.range }}">
+            <button type="submit">Save</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
   </div>
 </body>
 <!-- Script of origin JS -->
@@ -294,4 +338,5 @@
     });
   });
 </script>
+
 </html>
