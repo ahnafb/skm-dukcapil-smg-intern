@@ -242,7 +242,7 @@
         <input type="text" name="gender_name" placeholder="Masukkan Jenis Kelamin">
         <button type="submit">Add</button>
       </form>
-      <div id="message"></div>
+      <div id="message-gender"></div>
       <ul id="genderList">
         {% for gender in genders %}
         <li>
@@ -264,7 +264,7 @@
         <input type="text" name="age_range" placeholder="Masukkan Rentang Usia">
         <button type="submit">Add</button>
       </form>
-      <div id="message"></div>
+      <div id="message-age"></div>
       <ul id="ageList">
         {% for age in ages %}
         <li>
@@ -279,8 +279,149 @@
         {% endfor %}
       </ul>
     </div>
+    <!-- !Pendidikan -->
+    <div class="box-card">
+      <h2>Pendidikan</h2>
+      <form id="pendidikanForm">
+        <input type="text" name="pendidikan_name" placeholder="Masukkan Pendidikan">
+        <button type="submit">Add</button>
+      </form>
+      <div id="message-pendidikan"></div>
+      <ul id="pendidikanList">
+        {% for pendidikan in pendidikans %}
+        <li>
+          <span class="pendidikanName">{{ pendidikan.name }}</span>
+          <button class="editPendidikanBtn" data-id="{{ pendidikan._id }}">Edit</button>
+          <button class="deletePendidikanBtn" data-id="{{ pendidikan._id }}">Delete</button>
+          <form class="editPendidikanForm" style="display: none;">
+            <input type="text" name="edited_name" value="{{ pendidikan.name }}">
+            <button type="submit">Save</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <!-- !Pekerjaan -->
+    <div class="box-card">
+      <h2>Pekerjaan</h2>
+      <form id="pekerjaanForm">
+        <input type="text" name="pekerjaan_name" placeholder="Masukkan Pekerjaan">
+        <button type="submit">Add</button>
+      </form>
+      <div id="message-pekerjaan"></div>
+      <ul id="pekerjaanList">
+        {% for pekerjaan in pekerjaans %}
+        <li>
+          <span class="pekerjaanName">{{ pekerjaan.name }}</span>
+          <button class="editPekerjaanBtn" data-id="{{ pekerjaan._id }}">Edit</button>
+          <button class="deletePekerjaanBtn" data-id="{{ pekerjaan._id }}">Delete</button>
+          <form class="editPekerjaanForm" style="display: none;">
+            <input type="text" name="edited_name" value="{{ pekerjaan.name }}">
+            <button type="submit" class="savePekerjaanBtn" data-id="{{ pekerjaan._id }}">Save</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <h1>Question Form</h1>
+    <ul>
+      {% for question in questions %}
+      <li>
+        {{ question.question_text }}
+        <button class="edit-question-btn" data-id="{{ question._id }}">Edit</button>
+        <ul>
+          {% for option in question.options %}
+          <li>{{ option.option_text }} - Value: {{ option.value }}</li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% endfor %}
+    </ul>
+    <form id="questionForm">
+      <label for="question_text">Question:</label>
+      <input type="text" id="question_text" name="question_text" required><br><br>
+
+      <!-- Options -->
+      <div class="option">
+        <label for="option1_text">Option 1:</label>
+        <input type="text" id="option1_text" name="option1_text" value="Sangat Sesuai" required>
+        <label for="option1_value">Value:</label>
+        <input type="number" id="option1_value" name="option1_value" value="10" required><br><br>
+
+        <label for="option2_text">Option 2:</label>
+        <input type="text" id="option2_text" name="option2_text" value="Sesuai" required>
+        <label for="option2_value">Value:</label>
+        <input type="number" id="option2_value" name="option2_value" value="7.5" required><br><br>
+
+        <label for="option3_text">Option 3:</label>
+        <input type="text" id="option3_text" name="option3_text" value="Kurang Sesuai" required>
+        <label for="option3_value">Value:</label>
+        <input type="number" id="option3_value" name="option3_value" value="5" required><br><br>
+
+        <label for="option4_text">Option 4:</label>
+        <input type="text" id="option4_text" name="option4_text" value="Tidak Sesuai" required>
+        <label for="option4_value">Value:</label>
+        <input type="number" id="option4_value" name="option4_value" value="2.5" required><br><br>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <div id="message"></div>
   </div>
 </body>
+<!-- !Edit -->
+<script>
+  $(document).ready(function () {
+    // Event listener untuk tombol "Edit"
+    $('.edit-question-btn').click(function () {
+      var questionId = $(this).data('id');
+
+      // Kirim permintaan AJAX ke server untuk mendapatkan detail pertanyaan
+      $.ajax({
+        type: 'GET',
+        url: '/get_question_details',
+        data: { question_id: questionId },
+        success: function (response) {
+          // Tampilkan formulir edit dengan data pertanyaan yang diterima dari server
+          $('#editQuestionForm input[name="question_text"]').val(response.question_text);
+          $('#editQuestionForm').attr('action', '/edit_question/' + questionId);
+          // Isi opsi pertanyaan
+          for (var i = 0; i < response.options.length; i++) {
+            $('#editOption' + (i + 1)).val(response.options[i].option_text);
+            $('#editValue' + (i + 1)).val(response.options[i].value);
+          }
+          $('#editQuestionModal').modal('show'); // Tampilkan modal edit
+        },
+        error: function (xhr, status, error) {
+          alert('Error occurred while fetching question details.');
+        }
+      });
+    });
+  });
+</script>
+<!-- !ADD -->
+<script>
+  $(document).ready(function () {
+    // Submit form via AJAX
+    $('#questionForm').submit(function (event) {
+      event.preventDefault();
+      var formData = $(this).serialize();
+      $.ajax({
+        type: 'POST',
+        url: '/add_question',
+        data: formData,
+        success: function (response) {
+          $('#message').text(response.message);
+          $('#questionForm')[0].reset(); // Reset form
+        },
+        error: function (xhr, status, error) {
+          $('#message').text('Error occurred while adding question.');
+        }
+      });
+    });
+  });
+</script>
 <!-- Script of origin JS -->
 <script>
   const sideMenu = document.querySelector('aside');

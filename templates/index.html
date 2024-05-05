@@ -259,11 +259,6 @@
         </div>
         <hr>
         <h1 class="display-6 fw-bold">PROFIL</h1>
-        <!-- Nama -->
-        <!-- <div class="mb-3">
-            <input type="text" class="form-control" id="nama" placeholder="Nama"/>
-          </div> -->
-        <!-- Jenis Kelamin -->
         <div class="mb-3">
           <h5>Jenis Kelamin</h5>
           {% for gender in genders %}
@@ -279,11 +274,32 @@
           <input type="radio" class="form-check-input" id="usia-{{ age.range }}" name="usia_give"
             value="{{ age.range }}">
           <label class="form-check-label" for="usia-{{ age.range }}">{{ age.range }}</label><br>
-          
+
           {% endfor %}
         </div>
-
         <div class="mb-3">
+          <h5>Pendidikan</h5>
+          {% for pendidikan in pendidikans %}
+          <input type="radio" class="form-check-input" id="pendidikan-{{ pendidikan.name }}" name="pendidikan_give"
+            value="{{ pendidikan.name }}">
+          <label class="form-check-label" for="pendidikan-{{ pendidikan.name }}">{{ pendidikan.name }}</label><br>
+          {% endfor %}
+        </div>
+        <div class="mb-3">
+          <h5>Pekerjaan</h5>
+          {% for pekerjaan in pekerjaans %}
+          <input type="radio" class="form-check-input" id="pekerjaan-{{ pekerjaan.name }}" name="pekerjaan_give"
+            value="{{ pekerjaan.name }}">
+          <label class="form-check-label" for="pekerjaan-{{ pekerjaan.name }}">{{ pekerjaan.name }}</label><br>
+          {% endfor %}
+          <input type="radio" class="form-check-input" id="pekerjaan-Lainnya" name="pekerjaan_give" value="Lainnya">
+          <label class="form-check-label" for="pekerjaan-Lainnya">Lainnya:</label>
+          <input type="text" id="pekerjaan-lainnya-input" name="pekerjaan_lainnya" class="custom-text" disabled
+            style="padding-left: 4px;">
+        </div>
+
+        <!-- TODO post.py: pendidikan -->
+        <!-- <div class="mb-3">
           <h5>Pendidikan</h5>
           <input type="radio" class="form-check-input" id="pendidikan-SD" name="pendidikan_give" value="SD">
           <label class="form-check-label" for="pendidikan-SD">SD</label><br>
@@ -305,8 +321,9 @@
 
           <input type="radio" class="form-check-input" id="pendidikan-S3" name="pendidikan_give" value="S3">
           <label class="form-check-label" for="pendidikan-S3">S3</label><br>
-        </div>
-        <div class="mb-4">
+        </div> -->
+        <!-- TODO post.py: pendidikan -->
+        <!-- <div class="mb-4">
           <h5>Pekerjaan</h5>
           <input type="radio" class="form-check-input" id="pekerjaan-PNS" name="pekerjaan_give" value="PNS">
           <label class="form-check-label" for="pekerjaan-PNS">PNS</label><br>
@@ -327,9 +344,10 @@
           <label class="form-check-label" for="pekerjaan-Lainnya">Lainnya:</label>
           <input type="text" id="pekerjaan-lainnya-input" name="pekerjaan_lainnya" class="custom-text" disabled
             style="padding-left: 4px;">
-        </div>
+        </div> -->
         <hr>
-        <h1 class="display-6 fw-bold">Form Pertanyaan</h1>
+        <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+        <!-- <h1 class="display-6 fw-bold">Form Pertanyaan</h1>
         <div class="mb-3">
           <p>1. Bagaimana pendapat Saudara tentang kesesuaian persyaratan pelayanan dengan jenis pelayanannya?</p>
           <input type="radio" class="form-check-input" id="tidak-sesuai" name="p1_give" value="Tidak Sesuai">
@@ -477,7 +495,7 @@
 
           <input type="radio" class="form-check-input" id="sangat-puas" name="p10_give" value="Sangat Puas">
           <label class="form-check-label" for="sangat-puas">Sangat Puas</label><br>
-        </div>
+        </div> -->
         <hr>
         <h2 class="display-6 fw-bold">Kritik & Saran</h2>
         <div class="mb-3">

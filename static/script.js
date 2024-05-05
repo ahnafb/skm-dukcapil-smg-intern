@@ -83,7 +83,7 @@ $(document).ready(function () {
             data: formData,
             success: function (response) {
                 alert(response.message);
-                $('#message').text(response.message);
+                $('#message-gender').text(response.message);
                 location.reload();
             },
             error: function (xhr, status, error) {
@@ -116,7 +116,7 @@ $(document).ready(function () {
             data: { gender_id: genderId, new_name: editedName },
             success: function (response) {
                 alert(response.message);
-                $('#message').text(response.message);
+                $('#message-gender').text(response.message);
                 location.reload();
             },
             error: function (xhr, status, error) {
@@ -137,7 +137,7 @@ $(document).ready(function () {
                 data: { gender_id: genderId },
                 success: function (response) {
                     alert(response.message);
-                    $('#message').text(response.message);
+                    $('#message-gender').text(response.message);
                     genderItem.remove();
                 },
                 error: function (xhr, status, error) {
@@ -161,7 +161,7 @@ $(document).ready(function () {
             data: formData,
             success: function (response) {
                 alert(response.message);
-                $('#message').text(response.message);
+                $('#message-age').text(response.message);
                 location.reload();
             },
             error: function (xhr, status, error) {
@@ -193,7 +193,7 @@ $(document).ready(function () {
             data: { age_id: ageId, new_range: editedRange },
             success: function (response) {
                 alert(response.message);
-                $('#message').text(response.message);
+                $('#message-age').text(response.message);
                 location.reload();
             },
             error: function (xhr, status, error) {
@@ -214,7 +214,7 @@ $(document).ready(function () {
                 data: { age_id: ageId },
                 success: function (response) {
                     alert(response.message);
-                    $('#message').text(response.message);
+                    $('#message-age').text(response.message);
                     ageItem.remove();
                 },
                 error: function (xhr, status, error) {
@@ -225,3 +225,156 @@ $(document).ready(function () {
         }
     });
 });
+
+
+// !CRUD PENDIDIKAN
+$(document).ready(function () {
+    // Menangani submit form untuk menambah pendidikan
+    $('#pendidikanForm').submit(function (event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+            type: 'POST',
+            url: '/add_pendidikan',
+            data: formData,
+            success: function (response) {
+                alert(response.message);
+                $('#message-pendidikan').text(response.message);
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert('Error occurred while adding pendidikan.');
+                $('#message').text('Error terjadi saat menambahakan pendidikan  .');
+            }
+        });
+    });
+
+    // Menangani klik tombol edit untuk pendidikan
+    $('.editPendidikanBtn').click(function () {
+        var pendidikanItem = $(this).closest('li');
+        var pendidikanName = pendidikanItem.find('.pendidikanName').text();
+        var editedForm = pendidikanItem.find('.editPendidikanForm');
+        var editInput = editedForm.find('input[name="edited_name"]');
+        editInput.val(pendidikanName);
+        editedForm.show();
+    });
+
+    // Menangani submit form edit untuk pendidikan
+    $('.editPendidikanForm').submit(function (event) {
+        event.preventDefault();
+        // var pendidikanItem = $(this).closest('li');
+        var pendidikanId = $(this).closest('li').find('.editPendidikanBtn').data('id');
+        var editedName = $(this).find('input[name="edited_name"]').val();
+        $.ajax({
+            type: 'POST',
+            url: '/edit_pendidikan',
+            data: { pendidikan_id: pendidikanId, new_name: editedName },
+            success: function (response) {
+                alert(response.message);
+                $('#message-pendidikan').text(response.message);
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert('Error occurred while editing pendidikan.');
+                $('#message').text('Error occurred while editing pendidikan.');
+            }
+        });
+    });
+
+    // Menangani klik tombol delete untuk pendidikan
+    $('.deletePendidikanBtn').click(function () {
+        if (confirm("Are you sure you want to delete this pendidikan?")) {
+            var pendidikanItem = $(this).closest('li');
+            var pendidikanId = $(this).data('id');
+            $.ajax({
+                type: 'POST',
+                url: '/delete_pendidikan',
+                data: { pendidikan_id: pendidikanId },
+                success: function (response) {
+                    alert(response.message);
+                    pendidikanItem.remove();
+                },
+                error: function (xhr, status, error) {
+                    alert('Error occurred while deleting pendidikan.');
+                }
+            });
+        }
+    });
+});
+
+// !CRUD PEKERJAAN
+$(document).ready(function () {
+    // Menangani submit form untuk menambah pekerjaan
+    $('#pekerjaanForm').submit(function (event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+            type: 'POST',
+            url: '/add_pekerjaan',
+            data: formData,
+            success: function (response) {
+                alert(response.message);
+                $('#message-pekerjaan').text(response.message);
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert('Error occurred while adding pekerjaan.');
+                $('#message').text('Error terjadi saat menambahakan pekerjaan.');
+            }
+        });
+    });
+
+    // Menangani klik tombol edit untuk pekerjaan
+    $('.editPekerjaanBtn').click(function () {
+        var pekerjaanItem = $(this).closest('li');
+        var pekerjaanName = pekerjaanItem.find('.pekerjaanName').text();
+        var editedForm = pekerjaanItem.find('.editPekerjaanForm');
+        var editInput = editedForm.find('input[name="edited_name"]');
+        editInput.val(pekerjaanName);
+        editedForm.show();
+    });
+
+    // Menangani submit form edit untuk pekerjaan
+    $('.editPekerjaanForm').submit(function (event) {
+        event.preventDefault();
+        var pekerjaanId = $(this).closest('li').find('.editPekerjaanBtn').data('id');
+        var editedName = $(this).find('input[name="edited_name"]').val();
+        $.ajax({
+            type: 'POST',
+            url: '/edit_pekerjaan',
+            data: { pekerjaan_id: pekerjaanId, new_name: editedName },
+            success: function (response) {
+                alert(response.message);
+                $('#message-pekerjaan').text(response.message);
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert('Error occurred while editing pekerjaan.');
+                $('#message').text('Error occurred while editing pekerjaan.');
+            }
+        });
+    });
+
+    // Menangani klik tombol delete untuk pekerjaan
+    $('.deletePekerjaanBtn').click(function () {
+        if (confirm("Are you sure you want to delete this pekerjaan?")) {
+            var pekerjaanItem = $(this).closest('li');
+            var pekerjaanId = $(this).data('id');
+            $.ajax({
+                type: 'POST',
+                url: '/delete_pekerjaan',
+                data: { pekerjaan_id: pekerjaanId },
+                success: function (response) {
+                    alert(response.message);
+                    pekerjaanItem.remove();
+                },
+                error: function (xhr, status, error) {
+                    alert('Error occurred while deleting pekerjaan.');
+                }
+            });
+        }
+    });
+});
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!
+

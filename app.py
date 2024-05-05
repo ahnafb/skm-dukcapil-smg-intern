@@ -44,8 +44,11 @@ def home():
     services = db.services.find()
     genders = db.genders.find()
     ages = db.ages.find() 
+    pendidikans = db.pendidikans.find()     
+    pekerjaans = db.pekerjaans.find()
+    questions = db.questions.find()
     # Kirim data ke template HTML
-    return render_template('index.html', services=services, genders=genders, ages=ages)
+    return render_template('index.html', services=services, genders=genders, ages=ages, pendidikans=pendidikans, pekerjaans=pekerjaans, questions=questions)
 
 @app.route('/datadiri', methods=['GET'])
 def show_datadiri():
@@ -153,10 +156,13 @@ def statistik():
 # !!!!!!! Form Page Tampil CRUD
 @app.route('/form_dashboard')
 def form():
-    services = db.services.find()  # Memuat semua data layanan untuk ditampilkan di halaman admin
-    genders = db.genders.find()  # Memuat semua data jenis kelamin untuk ditampilkan di halaman admin
+    services = db.services.find()  
+    genders = db.genders.find()
     ages = db.ages.find() 
-    return render_template('form_dashboard.html', services=services, genders=genders, ages=ages)
+    pendidikans = db.pendidikans.find()
+    pekerjaans = db.pekerjaans.find()
+    questions = db.questions.find()
+    return render_template('form_dashboard.html', services=services, genders=genders, ages=ages, pendidikans=pendidikans, pekerjaans=pekerjaans, questions=questions)
 
 # !!!!!!! Form page ->> CRUD Jenis Layanan
 @app.route('/add_service', methods=['POST'])
@@ -221,7 +227,98 @@ def delete_age():
     db.ages.delete_one({'_id': ObjectId(age_id)})
     return jsonify({'message': 'Usia berhasil dihapus!'})
 
-    
+# !!!!!!! Form page ->> CRUD Pendidikan
+@app.route('/add_pendidikan', methods=['POST'])
+def add_pendidikan():
+    pendidikan_name = request.form['pendidikan_name']
+    db.pendidikans.insert_one({'name': pendidikan_name})
+    return jsonify({'message': 'Pendidikan berhasil ditambahkan!'})
+
+# Route untuk mengedit pendidikan
+@app.route('/edit_pendidikan', methods=['POST'])
+def edit_pendidikan():
+    pendidikan_id = request.form['pendidikan_id']
+    new_name = request.form['new_name']
+    db.pendidikans.update_one({'_id': ObjectId(pendidikan_id)}, {'$set': {'name': new_name}})
+    return jsonify({'message': 'Pendidikan berhasil di-update!'})
+
+# Route untuk menghapus pendidikan
+@app.route('/delete_pendidikan', methods=['POST'])
+def delete_pendidikan():
+    pendidikan_id = request.form['pendidikan_id']
+    db.pendidikans.delete_one({'_id': ObjectId(pendidikan_id)})
+    return jsonify({'message': 'Pendidikan berhasil dihapus!'})
+
+# !!!!!!! Form page ->> CRUD Pendidikan
+# Route untuk menambah pekerjaan
+@app.route('/add_pekerjaan', methods=['POST'])
+def add_pekerjaan():
+    pekerjaan_name = request.form['pekerjaan_name']
+    db.pekerjaans.insert_one({'name': pekerjaan_name})
+    return jsonify({'message': 'Pekerjaan berhasil ditambahkan!'})
+
+# Route untuk mengedit pekerjaan
+@app.route('/edit_pekerjaan', methods=['POST'])
+def edit_pekerjaan():
+    pekerjaan_id = request.form['pekerjaan_id']
+    new_name = request.form['new_name']
+    db.pekerjaans.update_one({'_id': ObjectId(pekerjaan_id)}, {'$set': {'name': new_name}})
+    return jsonify({'message': 'Pekerjaan berhasil di-update!'})
+
+# Route untuk menghapus pekerjaan
+@app.route('/delete_pekerjaan', methods=['POST'])
+def delete_pekerjaan():
+    pekerjaan_id = request.form['pekerjaan_id']
+    db.pekerjaans.delete_one({'_id': ObjectId(pekerjaan_id)})
+    return jsonify({'message': 'Pekerjaan berhasil dihapus!'})
+
+# !!! FORM PERTANYAAN CRUD
+# Route untuk menambah pertanyaan
+@app.route('/add_question', methods=['POST'])
+def add_question():
+    # Ambil data dari form
+    question_text = request.form['question_text']
+    options = [
+        {'option_text': request.form['option1_text'], 'value': float(request.form['option1_value'])},
+        {'option_text': request.form['option2_text'], 'value': float(request.form['option2_value'])},
+        {'option_text': request.form['option3_text'], 'value': float(request.form['option3_value'])},
+        {'option_text': request.form['option4_text'], 'value': float(request.form['option4_value'])}
+    ]
+
+    # Masukkan pertanyaan ke dalam database
+    db.questions.insert_one({
+        'question_text': question_text,
+        'options': options
+    })
+
+    return jsonify({'message': 'Question added successfully!'})
+
+# !!! FORM PERTANYAAN CRUD EDIT
+# Route untuk mengedit pertanyaan
+@app.route('/edit_question', methods=['POST'])
+def edit_question():
+    # Ambil data dari form
+    question_id = request.form['question_id']
+    question_text = request.form['question_text']
+    options = [
+        {'option_text': request.form['option1_text'], 'value': float(request.form['option1_value'])},
+        {'option_text': request.form['option2_text'], 'value': float(request.form['option2_value'])},
+        {'option_text': request.form['option3_text'], 'value': float(request.form['option3_value'])},
+        {'option_text': request.form['option4_text'], 'value': float(request.form['option4_value'])}
+    ]
+
+    # Update pertanyaan di dalam database
+    db.questions.update_one(
+        {'_id': ObjectId(question_id)},
+        {'$set': {
+            'question_text': question_text,
+            'options': options
+        }}
+    )
+
+    return jsonify({'message': 'Question updated successfully!'})
+
+
 # !!!!!! end of admin page
 
 # ! Version1 Excel
@@ -275,9 +372,7 @@ def export_excel():
     # Kirim file Excel ke pengguna
     return send_file(filename, as_attachment=True)
 
-
 # ! Start of Login
-
 @app.route("/login", methods=['GET'])
 def login():
     msg = request.args.get("msg")
@@ -340,7 +435,6 @@ def sign_in():
                 "msg": "We could not find a user with that id/password combination",
             }
         )
-
 # ! End of Login
 
 if __name__ == '__main__':
